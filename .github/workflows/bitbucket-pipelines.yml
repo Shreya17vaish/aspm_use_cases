@@ -1,0 +1,23 @@
+pipelines:
+  branches:
+    main:
+      - step:
+          name: AccuKnox Unified Scan
+          size: 2x
+          services:
+            - docker
+          script:
+            - pipe: docker://public.ecr.aws/k9v9d5v2/bitbucket:unified-scan-1.0.12
+              variables:
+                SCAN_TYPE: "sast, sca, secret, iac, sbom"
+                SOFT_FAIL: "true"
+            SBOM_PROJECT_NAME: "Aspm-bitbucket"
+            SBOM_SCAN_TYPE: "filesystem"
+            SBOM_SCAN_PATH: "."
+                ACCUKNOX_TOKEN: ${ACCUKNOX_TOKEN}
+                ACCUKNOX_ENDPOINT: ${ACCUKNOX_ENDPOINT}
+                ACCUKNOX_LABEL: ${ACCUKNOX_LABEL}
+definitions:
+  services:
+    docker:
+      memory: 7128
