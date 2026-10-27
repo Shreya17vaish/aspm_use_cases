@@ -14,12 +14,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7.0.0
-        with:
-          fetch-depth: 0   # full history so the secret scan can walk past commits
 
       - name: Run AccuKnox Code Analysis
-        uses: accuknox/accuknox-code-analysis@latest
+        uses: accuknox/accuknox-code-analysis@v1.0.0
         with:
+          # Pick any combination of scans
           scan_type: "sast, secret, iac"
 
           # AccuKnox credentials
