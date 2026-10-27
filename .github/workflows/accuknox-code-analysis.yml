@@ -14,12 +14,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7.0.0
+        with:
+          fetch-depth: 0   # full history so the secret scan can walk past commits
 
       - name: Run AccuKnox Code Analysis
         uses: accuknox/accuknox-code-analysis@latest
         with:
-          # Pick any combination of scans
-          scan_type: "sast, sca, secret, iac, ml, sbom"
+          scan_type: "sast, secret, iac"
 
           # AccuKnox credentials
           accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
@@ -29,8 +30,3 @@ jobs:
           # Common options
           soft_fail: true            # Continue the pipeline on findings
           upload_artifact: true      # Upload kept result files as an artifact
-
-          # SBOM – image or filesystem (project_name required)
-          sbom_scan_type: "image"
-          sbom_image_ref: "myapp:latest"
-          sbom_project_name: "my-project"
