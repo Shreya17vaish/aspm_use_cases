@@ -1,0 +1,2 @@
+docker build -f docker -t py-http-server .
+docker run -d -p 80:80 --name web py-http-server
